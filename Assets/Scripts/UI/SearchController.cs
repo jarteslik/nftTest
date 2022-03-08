@@ -60,6 +60,7 @@ public class SearchController : MonoBehaviour
                     {
                         print(data.meta.image.url.ORIGINAL);
                         string _imgUrl = data.meta.image.url.ORIGINAL;
+                        if(_imgUrl.EndsWith(".png") || _imgUrl.EndsWith(".jpg"))
                         imgUrls.Add(_imgUrl);
                     }
                 }
