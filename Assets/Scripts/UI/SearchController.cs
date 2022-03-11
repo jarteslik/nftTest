@@ -46,22 +46,24 @@ public class SearchController : MonoBehaviour
 
             if (webRequest.isNetworkError || webRequest.isHttpError)
             {
-                Debug.Log(": Error: " + webRequest.error);
-                
+                //Debug.Log(": Error: " + webRequest.error);
+                ScreenController.Instance.ShowPopup(true, "ERR");
             }
             else
             {
-                
                 dynamic dynObj = JsonConvert.DeserializeObject(webRequest.downloadHandler.text);
                 
                 foreach (var data in dynObj.items)
                 {
                     if (data.meta.image != null)
                     {
-                        print(data.meta.image.url.ORIGINAL);
-                        string _imgUrl = data.meta.image.url.ORIGINAL;
-                        if(_imgUrl.EndsWith(".png") || _imgUrl.EndsWith(".jpg"))
-                        imgUrls.Add(_imgUrl);
+                        //некрасивая строчка, но мета почему то иногда не содержит того или другого
+                        string _typeMeta = _typeMeta = (data.meta.image.meta.PREVIEW != null) ? data.meta.image.meta.PREVIEW.type : data.meta.image.meta.ORIGINAL.type; 
+                            if (_typeMeta.Contains("png") || _typeMeta.Contains("jpg"))
+                            {
+                                string _imgUrl = data.meta.image.url.ORIGINAL;
+                                imgUrls.Add(_imgUrl);
+                            }
                     }
                 }
                 StartCoroutine(DownloadImages());
@@ -71,41 +73,34 @@ public class SearchController : MonoBehaviour
     IEnumerator DownloadImages()
     {
         UnityWebRequest webRequestimg = null;
-        try
-            {
-                webRequestimg = UnityWebRequestTexture.GetTexture(imgUrls[0]);
-            }
-        catch
-            {
-                idField.text = "";
-                ScreenController.Instance.ShowPopup(true, "ERR");
-                StopCoroutine(DownloadImages());
-            }
 
-        if (webRequestimg != null)
+        ScreenController.Instance.ShowPopup(true, "DWNLD");
+        for (int i = 0; i < nftArts.Length; i++)
         {
-            ScreenController.Instance.ShowPopup(true, "DWNLD");
-            for (int i = 0; i < nftArts.Length; i++)
+            if (i < imgUrls.Count)
+            {
+                webRequestimg = UnityWebRequestTexture.GetTexture(imgUrls[i]);
+                yield return webRequestimg.SendWebRequest();
+                if (webRequestimg.isNetworkError)
                 {
-                    webRequestimg = UnityWebRequestTexture.GetTexture(imgUrls[i]);
-
-                    yield return webRequestimg.SendWebRequest();
-                    if (webRequestimg.isNetworkError)
-                    {
-                        Debug.Log("error");
-                    }
-                    else
-                    {
-                        Texture2D tex = ((DownloadHandlerTexture)webRequestimg.downloadHandler).texture;
-                        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
-                        nftArts[i].sprite = sprite;
-
-                    }
+                    //Debug.Log("error");
+                    ScreenController.Instance.ShowPopup(true, "ERR");
+                    StopCoroutine(DownloadImages());
+                    break;
+                    
                 }
-                ScreenController.Instance.ShowPopup(false,"DWNLD");
-                yield return new WaitForSecondsRealtime(1f);
-                ScreenController.Instance.ShowScreen(GameObject.Find("ShowingScreen"));
+                else
+                {
+                    Texture2D tex = ((DownloadHandlerTexture)webRequestimg.downloadHandler).texture;
+                    Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
+                    nftArts[i].sprite = sprite;
+                }
             }
+            
         }
+        ScreenController.Instance.ShowPopup(false,"DWNLD");
+        yield return new WaitForSecondsRealtime(1f);
+        ScreenController.Instance.ShowScreen(GameObject.Find("ShowingScreen"));
+    }
 
  }

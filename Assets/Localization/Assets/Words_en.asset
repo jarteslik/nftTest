@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Words_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: e4142eca52208464793eb6d7a6eae872, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 12776943616
+    m_Localized: OWNER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1669564772352
+    m_Localized: SOMETHING GONE WRONG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1641458741248
+    m_Localized: DOWNLOAD IMAGES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1626078228480
+    m_Localized: 'ENTER ADDRES:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1608629923840
+    m_Localized: SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1590774771712
+    m_Localized: COLLECTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1577340416000
+    m_Localized: CREATOR
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

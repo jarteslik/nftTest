@@ -41,6 +41,7 @@ public class ShowController : MonoBehaviour
     {
         Texture2D _tex = choosedTexture.sprite.texture;
         viewCubeRenderer.material.mainTexture = _tex;
+        
     }
 
     IEnumerator ChangeView(GameObject currentView, GameObject nextView)
