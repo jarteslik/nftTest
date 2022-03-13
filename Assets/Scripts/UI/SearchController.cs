@@ -13,9 +13,9 @@ public class SearchController : MonoBehaviour
     [SerializeField]
     List<ToggleController> btns;
     string source = "Collection";
+    [SerializeField]
+    private ShowController ViewScreen;
     
-    [SerializeField] 
-    private Image[] nftArts;
 
     public void ChooseSource(ToggleController choosedBtn)
     {
@@ -75,7 +75,7 @@ public class SearchController : MonoBehaviour
         UnityWebRequest webRequestimg = null;
 
         ScreenController.Instance.ShowPopup(true, "DWNLD");
-        for (int i = 0; i < nftArts.Length; i++)
+        for (int i = 0; i < ViewScreen.nftArts.Length; i++)
         {
             if (i < imgUrls.Count)
             {
@@ -92,8 +92,9 @@ public class SearchController : MonoBehaviour
                 else
                 {
                     Texture2D tex = ((DownloadHandlerTexture)webRequestimg.downloadHandler).texture;
+                    ViewScreen.cubeSides[i].material.mainTexture = tex;
                     Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(tex.width / 2, tex.height / 2));
-                    nftArts[i].sprite = sprite;
+                    ViewScreen.nftArts[i].sprite = sprite;
                 }
             }
             

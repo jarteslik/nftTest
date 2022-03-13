@@ -11,7 +11,8 @@ public class ShowController : MonoBehaviour
     [SerializeField]
     GameObject viewImg, viewCube;
     [SerializeField]
-    MeshRenderer viewCubeRenderer;
+    public Image[] nftArts;
+    public MeshRenderer[] cubeSides;
     public void ChooseView(ToggleController choosedBtn)
     {
         foreach (ToggleController btn in btns)
@@ -35,13 +36,6 @@ public class ShowController : MonoBehaviour
                 StartCoroutine(ChangeView(viewImg, viewCube));
                 break;
         }
-    }
-
-    public void ChooseTexture(Image choosedTexture)
-    {
-        Texture2D _tex = choosedTexture.sprite.texture;
-        viewCubeRenderer.material.mainTexture = _tex;
-        
     }
 
     IEnumerator ChangeView(GameObject currentView, GameObject nextView)

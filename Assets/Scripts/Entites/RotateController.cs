@@ -4,7 +4,7 @@ using UnityEngine;
 public class RotateController : MonoBehaviour
 {
     bool mouseOn;
-    float rotationSpeed = 5;
+    public float rotationSpeed = 5;
     private void OnMouseDown()
     {
         mouseOn = true;
@@ -24,7 +24,7 @@ public class RotateController : MonoBehaviour
         {
             yield return delay;
             rotation.x = Input.GetAxis("Mouse Y") * rotationSpeed;
-            rotation.y = Input.GetAxis("Mouse X") * rotationSpeed;
+            rotation.y = -Input.GetAxis("Mouse X") * rotationSpeed;
             transform.Rotate(rotation, Space.World);
         }
     }
